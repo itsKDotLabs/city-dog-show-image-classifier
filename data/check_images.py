@@ -60,10 +60,12 @@ def main():
     #             get_pet_labels(in_arg.dir)
     # This function creates the results dictionary that contains the results, 
     # this dictionary is returned from the function call as the variable results
-    results = get_pet_labels(None)
+    results = get_pet_labels(in_arg.dir)
 
     # Function that checks Pet Images in the results Dictionary using results    
     check_creating_pet_image_labels(results)
+
+    sleep(1)
 
 
     # TODO 3: Define classify_images function within the file classiy_images.py
@@ -74,10 +76,12 @@ def main():
     #             classify_images(in_arg.dir, results, in_arg.arch)
     # Creates Classifier Labels with classifier function, Compares Labels, 
     # and adds these results to the results dictionary - results
-    classify_images(None, results, None)
+    classify_images(in_arg.dir, results, in_arg.arch)
 
     # Function that checks Results Dictionary using results    
-    check_classifying_images(results)    
+    check_classifying_images(results)
+
+    sleep(1)    
 
     
     # TODO 4: Define adjust_results4_isadog function within the file adjust_results4_isadog.py
@@ -88,10 +92,12 @@ def main():
     # Adjusts the results dictionary to determine if classifier correctly 
     # classified images as 'a dog' or 'not a dog'. This demonstrates if 
     # model can correctly classify dog images as dogs (regardless of breed)
-    adjust_results4_isadog(results, None)
+    adjust_results4_isadog(results, in_arg.dogfile)
 
     # Function that checks Results Dictionary for is-a-dog adjustment using results
     check_classifying_labels_as_dogs(results)
+
+    sleep(1)
 
 
     # TODO 5: Define calculates_results_stats function within the file calculates_results_stats.py
@@ -105,6 +111,8 @@ def main():
     # Function that checks Results Statistics Dictionary using results_stats
     check_calculating_results(results, results_stats)
 
+    sleep(1)
+
 
     # TODO 6: Define print_results function within the file print_results.py
     # Once the print_results function has been defined replace 'None' 
@@ -113,7 +121,7 @@ def main():
     #      print_results(results, results_stats, in_arg.arch, True, True)
     # Prints summary results, incorrect classifications of dogs (if requested)
     # and incorrectly classified breeds (if requested)
-    print_results(results, results_stats, None, True, True)
+    print_results(results, results_stats, in_arg.arch, True, True)
     
     # TODO 0: Measure total program runtime by collecting end time
     end_time = time()

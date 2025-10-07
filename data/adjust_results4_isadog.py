@@ -66,5 +66,39 @@ def adjust_results4_isadog(results_dic, dogfile):
                maltese) (string - indicates text file's filename)
     Returns:
            None - results_dic is mutable data type so no return needed.
-    """           
-    None
+    """      
+
+    dognames_dic = {}
+
+    #reads the dognames from dognames text file
+    with open(dogfile, 'r') as file:
+        for line in file:
+            dog_name = line.strip().lower()
+            dognames_dic[dog_name] = 1
+
+
+    for filename in results_dic:
+        
+        #gets the pet image label
+        pet_label = results_dic[filename][0]
+
+        #gets the classifier label
+        classifier_label = results_dic[filename][1]
+
+        #checks if pet label is a dog or not
+        if pet_label in dognames_dic:
+            pet_is_dog = 1
+        else:
+            pet_is_dog = 0
+
+        classifier_words = classifier_label.split(', ')
+
+        #checks if any of the words is a dog breed
+        classifier_is_dog = 0
+        for word in classifier_words:
+            if word in dognames_dic:
+                classifier_is_dog = 1
+                break
+        
+        #adds the results to dictionary
+        results_dic[filename].extend([pet_is_dog, classifier_is_dog])

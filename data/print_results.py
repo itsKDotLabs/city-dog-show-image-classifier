@@ -62,5 +62,36 @@ def print_results(results_dic, results_stats_dic, model,
     Returns:
            None - simply printing results.
     """    
-    None
-                
+    #prints the CNN model used
+    print("\n\n*** Results Summary for CNN Model Architecture:", model.upper(), "***")
+
+    #prints the counts
+    print("{:20}: {:3d}".format('N Images', results_stats_dic['n_images']))
+    print("{:20}: {:3d}".format('N Dog Images', results_stats_dic['n_dogs_img']))
+    print("{:20}: {:3d}".format('N Not-Dog Images', results_stats_dic['n_notdogs_img']))
+
+    #prints all the percentages using loop
+    for key in results_stats_dic:
+        if key.startswith('pct'):
+            print("{:20}: {:.1f}%".format(key, results_stats_dic[key]))
+
+    #prints misclassified dogs
+    if print_incorrect_dogs:
+        #checks for any misclassed dogs
+        if(results_stats_dic['n_correct_dogs'] + results_stats_dic['n_correct_notdogs'] != results_stats_dic['n_images']):
+            print("\nINCORRECT Dog/NOT Dog Assignments:")
+
+            #checks if labels disagree on if a dog, sum of indices 3 and 4 == 1 means they disagree
+            for file in results_dic:
+                if sum(results_dic[file][3:]) == 1:
+                    print("Real: {:>26}    Classifier: {:>30}".format(results_dic[file][0], results_dic[file][1]))
+
+    #prints misclassified breeds
+    if print_incorrect_breed:
+        #checks if any misclassed breeds
+        if(results_stats_dic['n_correct_dogs'] != results_stats_dic['n_correct_breed']):
+            print("\nINCORRECT Dog Breed Assignment:")
+            #checks if agrees on if a dog but not on breed. Index 3 == 1 and index 2 == 0, don't match
+            for file in results_dic:
+                if sum(results_dic[file][3:]) == 2 and results_dic[file][2] == 0:
+                    print("Real: {:>26}    Classifier: {:>30}".format(results_dic[file][0], results_dic[file][1]))

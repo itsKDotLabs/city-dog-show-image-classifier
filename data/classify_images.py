@@ -65,4 +65,21 @@ def classify_images(images_dir, results_dic, model):
      Returns:
            None - results_dic is mutable data type so no return needed.         
     """
-    None 
+
+    # loops through each pet image filename
+    for file in results_dic:
+        #asks the CNN its thought of image
+        classifier_label = classifier(images_dir + file, model)
+
+        classifier_label = classifier_label.lower().strip()
+
+        #retrieves the actual pet label
+        pet_label = results_dic[file][0]
+
+        #checks actual pet label against the CNNs prediction
+        if pet_label in classifier_label:
+            match = 1
+        else:
+            match = 0
+        #adds classifying label and the match result to the list for the file
+        results_dic[file].extend([classifier_label, match])
